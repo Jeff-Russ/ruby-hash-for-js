@@ -21,10 +21,8 @@ exports.Hash = function(arg1) {
                 configurable: true,
                 enumerable: true,
               });
-
             } else if (type !== 'function') {
               dest[prop] = src[prop];
-            
             } else {
               Object.defineProperty(this,prop,{
                 value: src[prop],
@@ -64,6 +62,15 @@ exports.Hash = function(arg1) {
             }
           }
         }
+      }
+    },
+    isEmpty:
+    { value: function()
+      { var count = 0;
+        for (var p in this) {
+          if (this.hasOwnProperty(p) && typeof this[p] !== 'function') { count++;}
+        }
+        return count === 0;
       }
     },
     );

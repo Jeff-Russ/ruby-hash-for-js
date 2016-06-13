@@ -74,10 +74,14 @@ var hash = new Hash({
 >> Add the contents of h2 to h1.  
 >> TODO: add an optional passed function to solve conflicts.
 
->__h1.mergeOut(h2)__
+> __h1.mergeOut(h2)__
 >> Return a new hash containing the contents of h1 and h2.  
 >> TODO: add an optional passed function to solve conflicts.
 
->__h.clear(optional_boolean)__ 
+> __h.clear(optional_boolean)__  
 >> Remove all key-value pairs from hash h.
 >> Without the `optional_boolean` the operation is recursive. Provide the argument `false` to prevent inner hashes from being deleted.  
+> __h.isEmpty()__  
+>> Return true if hash h contains no data key/value pairs (excludes methods)  
+>> 
+>> 
