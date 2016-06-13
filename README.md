@@ -68,7 +68,7 @@ var hash = new Hash({
 
 # JS Hash Built-in Methods
 
-### I - Assignment Methods
+### Assignment and Basic Methods
     
 > __h1.mergeIn(h2)__ 
 >> Add the contents of h2 to h1.  
@@ -77,3 +77,7 @@ var hash = new Hash({
 >__h1.mergeOut(h2)__
 >> Return a new hash containing the contents of h1 and h2.  
 >> TODO: add an optional passed function to solve conflicts.
+
+>__h.clear(optional_boolean)__ 
+>> Remove all key-value pairs from hash h.
+>> Without the `optional_boolean` the operation is recursive. Provide the argument `false` to prevent inner hashes from being deleted.  

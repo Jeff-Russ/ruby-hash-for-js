@@ -45,7 +45,27 @@ exports.Hash = function(arg1) {
         return this.mergeHashes(hash, copy);
       }
     },
+    clear:
+    { value: function(recurse_bool)
+      { if (recurse_bool === undefined) { var recurse = true; } // default is to resurse
+        else { var recurse = recurse_bool; }
 
+        if (recurse) {
+          for (var p in this) {
+            if (this.hasOwnProperty(p) && typeof this[p] !== 'function') {
+              delete this[p];
+            }
+          }
+        } else {
+          for (var p in this) {
+            if (this.hasOwnProperty(p) && typeof this[p] !== 'function' &&
+                typeof this[p] !== 'object') {
+              delete this[p];
+            }
+          }
+        }
+      }
+    },
     );
   // constructor with args:
   if (arg1 instanceof Object) { this.mergeIn(arg1, this); }
