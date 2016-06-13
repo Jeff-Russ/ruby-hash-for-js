@@ -71,37 +71,37 @@ var hash = new Hash({
 
 # JS Hash Built-in Methods
 
-### Getter and Setter Methods 
+## Getter and Setter Methods 
 
 These methods are not in the Ruby Hash class and provide smarter ways to assign new properties to a Hash object in the JavaScript environment.  
     
-> __h.get(key)__ 
->> Returns value of key containing data.  
+### h.__get__(key) 
+* Returns value of key containing data.  
    
-> __h.get(innerhash_name)__
->> Returns a new hash containing the contents of inner hash.  
+### h.__get__(innerhash_name)
+* Returns a new hash containing the contents of inner hash.  
    
-> __h.get()__ -no argument-  
->> Returns a copy of the entire hash object h.  
+### h.__get__() -no argument-  
+* Returns a copy of the entire hash object h.  
     
-> __h.set(key, value)__ 
->> Assigns a new value to existing key or creates a new one.  
->> TODO: make all-uppercase keys create constants automatically.  
+### h.__set__(key, value) 
+* Assigns a new value to existing key or creates a new one.  
+* TODO: make all-uppercase keys create constants automatically.  
    
-> __h.set(key, value, 'const')__ 
->> Assigns a new readonly value to existing key or creates a new one.   
+### h.__set__(key, value, 'const') 
+* Assigns a new readonly value to existing key or creates a new one.   
    
-> __h.set(innerhash_name, hash_obj)__
->> Creates a new key with innerhash_name and assigns it to the result of running `new Hash(hash_obj)`.  
+### h.__set__(innerhash_name, hash_obj)
+* Creates a new key with innerhash_name and assigns it to the result of running `new Hash(hash_obj)`.  
    
-> __h.set(function_variable)__  
->> Adds a new method to the Hash object as non-enumerable and write-protected.  
+### h.__set__(function_variable)  
+* Adds a new method to the Hash object as non-enumerable and write-protected.  
    
-> __h.set(function(...){...})__  
->> Same as above.  
+### h.__set__(function(...){...})  
+* Same as above.  
    
-> __h.const(key, value)__  
->> Same as `h.set(key, value, 'const')`  
+### h.__const__(key, value)  
+* Same as `h.set(key, value, 'const')`  
 
 NOTE: that since any inner object is also a Hash object, they will also have Hash methods available to them. So, for example, 
 if you have a hash with two nested hashes you can do these:  
@@ -111,76 +111,72 @@ var inner1 = hash.get(inner);
 var inner2 = hash.inner.get(innerinner);
 ``` 
 
-### Size Information Methods
+## Size Information Methods
   
-> __h.isEmpty()__  
->> Return true if hash h contains no data key-value pairs (excludes methods)  
+### h.__isEmpty__()  
+* Return true if hash h contains no data key-value pairs (excludes methods)  
   
-> __h.length()__  
->> Returns number data key-value pairs (excludes methods)  
->> TODO: add optional  
+### h.__length__()  
+* Returns number data key-value pairs (excludes methods). TODO: add optional  
   
 ### Mass Assignment & Deletion Methods
     
-> __h1.mergeIn(h2)__ 
->> Add the contents of h2 to h1.  
->> TODO: add an optional passed function to solve conflicts.
+### h1.__mergeIn__(h2) 
+* Add the contents of h2 to h1. TODO: add an optional passed function to solve conflicts.
 
-> __h1.mergeOut(h2)__
->> Return a new hash containing the contents of h1 and h2.  
->> TODO: add an optional passed function to solve conflicts.
+### h1.__mergeOut__(h2)
+* Return a new hash containing the contents of h1 and h2. TODO: add an optional passed function to solve conflicts.
 
-> __h.clear(optional_boolean)__  
->> Remove all key-value pairs from hash h.
->> Without the `optional_boolean` the operation is recursive. Provide the argument `false` to prevent inner hashes from being deleted.  
+### h.__clear__(optional_boolean)  
+* Remove all key-value pairs from hash h. Without the `optional_boolean` the operation is recursive. Provide the argument `false` to prevent inner hashes from being deleted.  
   
-### Mapping Enumeration Methods
+## Mapping Enumeration Methods
   
 The `this` keyword available inside the passed function in each method below. As is the case in Ruby Hashes, when the value of a 
 key-value pair is passed is to the function, assignment to it does not effect the hash data. You must assign to this[key] or hashname[key]. TODO: provide some way to traverse the hash ommitting certain data types to prevent deletion of inner hashes, etc.  
   
-> __h.each(function(key, value){...})__  
->> Applies a function to each key-value pair passing both the key as string and the value as parameters.   
+### h.__each__(function(key, value){...})  
+* Applies a function to each key-value pair passing both the key as string and the value as parameters.   
   
-> __h.eachKey(function(key){...})__  
->> Applies a function to each key-value pair passing the key as string parameter. 
->> 
-> __h.eachValue(function(value){...})__  
->> Applies a function to each key-value pair passing the value as parameter.  
+### h.__eachKey__(function(key){...})  
+* Applies a function to each key-value pair passing the key as string parameter. 
 
-### Deletion Methods
+### h.__eachValue__(function(value){...})  
+* Applies a function to each key-value pair passing the value as parameter.  
+
+## Deletion Methods
   
-> __h.delete(key)__  
->> Delete key-value pair and return value from hash h whose key is equal to key
+### h.__delete__(key)  
+* Delete key-value pair and return value from hash h whose key is equal to key
   
 The `this` keyword available inside the passed function in each method below.  
   
-> __h.deleteIf(function(key, value){...})__  
->> Delete every key-value pair from hash h for which passed function evaluates to true.   
+### h.__deleteIf__(function(key, value){...})  
+* Delete every key-value pair from hash h for which passed function evaluates to true.   
   
-> __h.keepIf(function(key, value){...})__  
->> Delete every key-value pair from hash h for which passed function evaluates to false. 
+### h.__keepIf__(function(key, value){...})  
+* Delete every key-value pair from hash h for which passed function evaluates to false. 
 
 
-### JavaScript Concerns Methods  
+## JavaScript Concerns Methods  
     
-> __h.toJson()__ 
->> Returns hash object as a JSON string. Of course this also works as a method for nested hashes.  
+### h.__toJson__() 
+* Returns hash object as a JSON string. Of course this also works as a method for nested hashes.  
 
-> __h.toJson(key)__ 
->> Returns sub-hash as a JSON string.  TODO: test test test
->> 
-> __h.logJson()__
->> Same as above but it also logs to `console.log`. 
+### h.__toJson__(key) 
+* Returns sub-hash as a JSON string.  TODO: test test test
+
+### h.__logJson__()
+* Same as above but it also logs to `console.log`. 
    
-> __h.logJson(key)__
->> Take a guess...   
+### h.__logJson__(key)
+* Take a guess...   
    
-> __h.defineProperty(prop, desc)__  
->> Define a property with descriptor (runs `Object.defineProperty(this, prop, desc)`)  
+### h.__defineProperty__(prop, desc)  
+* Define a property with descriptor (runs `Object.defineProperty(this, prop, desc)`)  
   
-> __h.logDescriptor()__  
->> prints output of `Object.getOwnPropertyDescriptor(this, prop)`  
+### h.__logDescriptor__()  
+* prints output of `Object.getOwnPropertyDescriptor(this, prop)`  
 
 
 
