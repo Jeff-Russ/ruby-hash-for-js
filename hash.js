@@ -36,7 +36,76 @@ exports.Hash = function(arg1) {
         return dest;
       }
     },
-    // Basic Assignment & Deletion Methods ====================================
+
+    // Getter and Setter Methods ==============================================
+
+    get:
+    { value: function(arg)
+      { if (arg === undefined) { return mergeHashes(this, {}); }
+        else if (this.hasOwnProperty(arg)) {
+          var type = typeof this[arg];
+          if (type === 'object') {return mergeHashes(this[arg], {});}
+          if (type !== 'function') {return this[arg];}
+        }
+      }
+    },
+    set:
+    { value: function(prop, value, constant)
+      { if (typeof value === 'object') {
+          this[prop] = new Hash(value);
+          return;
+        } else if (typeof value !== 'function') {
+          var desc = {
+            value: value,
+            enumerable: true,
+            writable: constant !== "const",
+          };
+        }
+        else var desc = { value: value };
+        desc.configurable === true;
+        Object.defineProperty(this, prop, desc);
+      }
+    },
+    const:
+    { value: function(prop, value)
+      { var type = typeof value;
+        if (type === 'object' || type === 'function') {
+          console.error("Hash.const can't be used for adding "+type+'s');
+          return; 
+        } else {
+          var desc = {
+            value: value,
+            configurable: true,
+            writable: false,
+            enumerable: true,
+          };
+          Object.defineProperty(this, prop, desc);
+        }
+      }
+    },
+
+    // Size Information Methods ===============================================
+    
+    isEmpty:
+    { value: function()
+      { var count = 0;
+        for (var p in this) {
+          if (this.hasOwnProperty(p) && typeof this[p] !== 'function') { count++;}
+        }
+        return count === 0;
+      }
+    },
+    length:
+    { value: function()
+      { var count = 0;
+        for (var p in this) {
+          if (this.hasOwnProperty(p) && typeof this[p] !== 'function') { count++;}
+        }
+        return count;
+      }
+    },
+
+    // Mass Assignment & Deletion Methods ====================================
 
     mergeIn: { // needs optional block to solve conflicts
       value: function(hash, opt_func) { return this.mergeHashes(hash, this); }
@@ -68,37 +137,8 @@ exports.Hash = function(arg1) {
         }
       }
     },
-    delete:
-    { value: function(prop)
-      { var type = typeof this[prop], val;
-        if (this.hasOwnProperty(prop) && type !== 'object' && type !== 'function') {
-          val = this[prop];
-          delete this[prop];
-        }
-        return val;
-      }
-    },
-    // Size Information Methods ===============================================
 
-    isEmpty:
-    { value: function()
-      { var count = 0;
-        for (var p in this) {
-          if (this.hasOwnProperty(p) && typeof this[p] !== 'function') { count++;}
-        }
-        return count === 0;
-      }
-    },
-    length:
-    { value: function()
-      { var count = 0;
-        for (var p in this) {
-          if (this.hasOwnProperty(p) && typeof this[p] !== 'function') { count++;}
-        }
-        return count;
-      }
-    },
-    // Size Information Methods ===============================================
+    // Mapping Enumeration Methods ============================================
 
     each:
     { value: function(fn)
@@ -121,8 +161,19 @@ exports.Hash = function(arg1) {
         }
       }
     },
-    // Deletion Enumeration Methods ===========================================
 
+    // Deletion Methods =======================================================
+
+    delete:
+    { value: function(prop)
+      { var type = typeof this[prop], val;
+        if (this.hasOwnProperty(prop) && type !== 'object' && type !== 'function') {
+          val = this[prop];
+          delete this[prop];
+        }
+        return val;
+      }
+    },
     deleteIf:
     { value: function(func, recurse_bool)
       { if (recurse_bool === undefined) { var recurse = true; } // default is to resurse
@@ -165,6 +216,7 @@ exports.Hash = function(arg1) {
         }
       }
     },
+
     );
   // constructor with args:
   if (arg1 instanceof Object) { this.mergeHashes(arg1, this); }
