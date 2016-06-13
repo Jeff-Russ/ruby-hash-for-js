@@ -1,5 +1,12 @@
 #!/usr/bin/env node
 
+//______require('thisfile').globalize();_________________________________
+exports.globalize = function(){
+  for(var p in this){ if(this.hasOwnProperty(p) && p !== 'globalize')
+    global[p] = global[p] || this[p];}};
+//_______________________________________________________________________
+
+
 exports.Hash = function(arg1) {
   if (arg1 instanceof Object) {
     exports.Hash.prototype.mergeHashes(arg1, this);
@@ -11,10 +18,8 @@ var HashProto = exports.Hash.prototype;
 
 // needs optional block to solve conflicts
 HashProto.mergeHashes = function(src, dest) {
-  for (var prop in src) 
-  {
-    if (src.hasOwnProperty(prop) && dest[prop] === undefined)
-    {
+  for (var prop in src) {
+    if (src.hasOwnProperty(prop) && dest[prop] === undefined) {
       var type = typeof src[prop];
 
       if (type === 'object') {
@@ -50,20 +55,18 @@ HashProto.get = function(arg) {
 };
 
 HashProto.set = function(prop, value, constant) {
-  { if (typeof value === 'object') {
-      this[prop] = new Hash(value);
-      return;
-    } else if (typeof value !== 'function') {
-      var desc = {
-        value: value,
-        enumerable: true,
-        writable: constant !== "const",
-      };
-    }
-    else var desc = { value: value };
-    desc.configurable === true;
-    Object.defineProperty(this, prop, desc);
-  }
+  if (typeof value === 'object') {
+    this[prop] = new Hash(value);
+    return;
+  } else if (typeof value !== 'function') {
+    var desc = {
+      value: value,
+      enumerable: true,
+      writable: constant !== "const",
+    };
+  } else var desc = { value: value };
+  desc.configurable === true;
+  Object.defineProperty(this, prop, desc);
 };
 
 HashProto.const = function(prop, value) {
@@ -93,12 +96,11 @@ HashProto.isEmpty = function() {
 };
 
 HashProto.length = function() {
-  { var count = 0;
-    for (var p in this) {
-      if (this.hasOwnProperty(p) && typeof this[p] !== 'function') { count++;}
-    }
-    return count;
+  var count = 0;
+  for (var p in this) {
+    if (this.hasOwnProperty(p) && typeof this[p] !== 'function') { count++;}
   }
+  return count;
 };
 
 // Mass Assignment & Deletion Methods ====================================
@@ -114,8 +116,9 @@ HashProto.mergeOut = function(hash, opt_func) {
   return this.mergeHashes(hash, copy);
 };
 
-HashProto.clear = function(recurse_bool) { 
-  if (recurse_bool === undefined) { var recurse = true; } // default is to resurse
+HashProto.clear = function(recurse_bool) {
+  // default is to resurse:
+  if (recurse_bool === undefined) { var recurse = true; }
   else { var recurse = recurse_bool; }
 
   if (recurse) {
@@ -157,16 +160,15 @@ HashProto.eachValue = function(fn) {
 // Other Enumeration Methods ==============================================
 
 HashProto.isAny = function(fn) {
-  { var bool = false;
-    for (var prop in this) {
-      if (this.hasOwnProperty(prop)) {
-        if (fn.call(this, prop, this[prop])) {
-          return true;
-        }
+  var bool = false;
+  for (var prop in this) {
+    if (this.hasOwnProperty(prop)) {
+      if (fn.call(this, prop, this[prop])) {
+        return true;
       }
     }
-    return false;
   }
+  return false;
 };
 
 HashProto.getRejected = function(fn) {
@@ -180,7 +182,6 @@ HashProto.getRejected = function(fn) {
   }
   return ret;
 };
-
 
 // Deletion Methods =======================================================
 
@@ -239,7 +240,7 @@ HashProto.keepIf = function(func, recurse_bool) {
 HashProto.toJson = function(prop) {
   if (prop === undefined) return JSON.stringify(this);
   else return JSON.stringify(this[prop]);
-}
+};
 
 HashProto.logJson = function(prop) {
   var json;
@@ -251,7 +252,7 @@ HashProto.logJson = function(prop) {
     console.log(json);
   }
   return json;
-}
+};
 
 HashProto.defineProperty = function(prop, desc) {
   // define a property with descriptor
@@ -260,12 +261,9 @@ HashProto.defineProperty = function(prop, desc) {
 
 HashProto.logDescriptor = function(prop) {
   if (prop === undefined) { console.log(this); }
-  else  {
+  else {
     console.log ('\n'+prop+': ')
     console.log (Object.getOwnPropertyDescriptor(this, prop));
   }
-}
+};
 
-//_______________________________________________________________________
-exports.globalize = function(){
-  for(var p in this){if(this.hasOwnProperty(p))global[p]=global[p]||this[p];}};
