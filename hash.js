@@ -5,38 +5,8 @@ exports.Hash = function(arg1) {
 
   Object.defineProperties(this, {
     // see below Object.defineProperties for constructor with args
-    
+
     mergeHashes: // needs optional block to solve conflicts
-    { value: function(src, dest) {
-
-        for (var prop in src) {
-          if (src.hasOwnProperty(prop) && dest[prop] === undefined) {
-            var type = typeof src[prop];
-
-            if (type === 'object') {
-              dest[prop] = new Hash(src[prop]);
-
-            } else if (type !== 'function' && prop === prop.toUpperCase()) {
-              Object.defineProperty(this,prop,{
-                configurable: true,
-                enumerable: true,
-              });
-
-            } else if (type !== 'function') {
-              dest[prop] = src[prop];
-            
-            } else {
-              Object.defineProperty(this,prop,{
-                value: src[prop],
-                configurable:true,
-              });
-            }
-          }
-        }
-        return dest;
-      }
-    },
-    mergeIn: // needs optional block to solve conflicts
     { value: function(src, dest) {
 
         for (var prop in src) {
