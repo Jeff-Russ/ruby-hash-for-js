@@ -73,6 +73,15 @@ exports.Hash = function(arg1) {
         return count === 0;
       }
     },
+    length:
+    { value: function()
+      { var count = 0;
+        for (var p in this) {
+          if (this.hasOwnProperty(p) && typeof this[p] !== 'function') { count++;}
+        }
+        return count;
+      }
+    },
     );
   // constructor with args:
   if (arg1 instanceof Object) { this.mergeHashes(arg1, this); }

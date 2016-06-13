@@ -81,7 +81,11 @@ var hash = new Hash({
 > __h.clear(optional_boolean)__  
 >> Remove all key-value pairs from hash h.
 >> Without the `optional_boolean` the operation is recursive. Provide the argument `false` to prevent inner hashes from being deleted.  
+  
 > __h.isEmpty()__  
 >> Return true if hash h contains no data key/value pairs (excludes methods)  
->> 
+  
+> __h.length()__  
+>> Returns number data key/value pairs (excludes methods)  
+>> TODO: add optional  
 >> 
