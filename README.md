@@ -92,17 +92,30 @@ var hash = new Hash({
 >> Without the `optional_boolean` the operation is recursive. Provide the argument `false` to prevent inner hashes from being deleted.  
   
 ### Mapping Enumeration Methods
-
+  
 The `this` keyword available inside the passed function in each method below. As is the case in Ruby Hashes, when the value of a 
 key-value pair is passed is to the function, assignment to it does not effect the hash data. You must assign to this[key] or hashname[key]. TODO: provide some way to traverse the hash ommitting certain data types to prevent deletion of inner hashes, etc.  
-
+  
 > __h.each(function(key, value){...})__  
 >> Applies a function to each key-value pair passing both the key as string and the value as parameters.   
   
 > __h.eachKey(function(key){...})__  
 >> Applies a function to each key-value pair passing the key as string parameter. 
 >> 
-> __h.eachValue(function(){...})__  
+> __h.eachValue(function(value){...})__  
 >> Applies a function to each key-value pair passing the value as parameter.  
+
+### Deletion Enumeration Methods
+  
+The `this` keyword available inside the passed function in each method below.  
+  
+> __h.deleteIf(function(key, value){...})__  
+>> Delete every key-value pair from hash h for which passed function evaluates to true.   
+  
+> __h.keepIf(function(key, value){...})__  
+>> Delete every key-value pair from hash h for which passed function evaluates to false. 
+
+
+
 
 

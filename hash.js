@@ -6,6 +6,8 @@ exports.Hash = function(arg1) {
   Object.defineProperties(this, {
     // see below Object.defineProperties for constructor with args
 
+    // DEPENDENCIES ===========================================================
+    
     mergeHashes: // needs optional block to solve conflicts
     { value: function(src, dest) {
 
@@ -34,6 +36,8 @@ exports.Hash = function(arg1) {
         return dest;
       }
     },
+    // Basic Assignment & Deletion Methods ====================================
+
     mergeIn: { // needs optional block to solve conflicts
       value: function(hash, opt_func) { return this.mergeHashes(hash, this); }
     },
@@ -64,6 +68,8 @@ exports.Hash = function(arg1) {
         }
       }
     },
+    // Size Information Methods ===============================================
+
     isEmpty:
     { value: function()
       { var count = 0;
@@ -82,6 +88,8 @@ exports.Hash = function(arg1) {
         return count;
       }
     },
+    // Size Information Methods ===============================================
+
     each:
     { value: function(fn)
       { for (var prop in this) {
@@ -103,7 +111,50 @@ exports.Hash = function(arg1) {
         }
       }
     },
+    // Deletion Enumeration Methods ===========================================
 
+    deleteIf:
+    { value: function(func, recurse_bool)
+      { if (recurse_bool === undefined) { var recurse = true; } // default is to resurse
+        else { var recurse = recurse_bool; }
+
+        if (recurse) {
+          for (var p in this) {
+            if (this.hasOwnProperty(p) && typeof this[p] !== 'function') {
+              if (func.call(this, p, this[p])) delete this[p];
+            }
+          }
+        } else {
+          for (var p in this) {
+            if (this.hasOwnProperty(p) && typeof this[p] !== 'function' &&
+                typeof this[p] !== 'object') {
+              if (func.call(this, p, this[p])) delete this[p];
+            }
+          }
+        }
+      }
+    },
+    keepIf:
+    { value: function(func, recurse_bool)
+      { if (recurse_bool === undefined) { var recurse = true; } // default is to resurse
+        else { var recurse = recurse_bool; }
+
+        if (recurse) {
+          for (var p in this) {
+            if (this.hasOwnProperty(p) && typeof this[p] !== 'function') {
+              if (! func.call(this, p, this[p])) delete this[p];
+            }
+          }
+        } else {
+          for (var p in this) {
+            if (this.hasOwnProperty(p) && typeof this[p] !== 'function' &&
+                typeof this[p] !== 'object') {
+              if (! func.call(this, p, this[p])) delete this[p];
+            }
+          }
+        }
+      }
+    },
     );
   // constructor with args:
   if (arg1 instanceof Object) { this.mergeHashes(arg1, this); }
