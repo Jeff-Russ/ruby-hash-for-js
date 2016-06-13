@@ -1,5 +1,8 @@
 # JS Hash
 
+# WARNING  
+This is not any sort of release as of now. It's still in early stages of design.  
+
 ## Ruby Style Hashes for JavaScript
 
 [on GitHub](http://github.com/Jeff-Russ/ruby-hash-for-js)  
