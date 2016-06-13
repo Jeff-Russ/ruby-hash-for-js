@@ -82,6 +82,28 @@ exports.Hash = function(arg1) {
         return count;
       }
     },
+    each:
+    { value: function(fn)
+      { for (var prop in this) {
+          if (this.hasOwnProperty(prop)) { fn.call(this, prop, this[prop]); }
+        }
+      }
+    },
+    eachKey:
+    { value: function(fn)
+      { for (var prop in this) {
+          if (this.hasOwnProperty(prop)) { fn.call(this, prop); }
+        }
+      }
+    },
+    eachValue:
+    { value: function(fn)
+      { for (var prop in this) {
+          if (this.hasOwnProperty(prop)) { fn.call(this, this[prop]); }
+        }
+      }
+    },
+
     );
   // constructor with args:
   if (arg1 instanceof Object) { this.mergeHashes(arg1, this); }

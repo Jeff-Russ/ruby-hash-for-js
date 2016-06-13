@@ -39,7 +39,7 @@ var hash = {
 		}
 	},
 	key2: 1.5,
-	key2: -2,
+	key3: -2,
 	func: function() {
 		console.log("I will be added as enumerable! BAD!");
 	}
@@ -58,7 +58,7 @@ var hash = new Hash({
 		}
 	},
 	key2: 1.5,
-	key2: -2,
+	key3: -2,
 	func: function() {
 		console.log("I will be added, but not enumerable!)");
 	}
@@ -68,7 +68,16 @@ var hash = new Hash({
 
 # JS Hash Built-in Methods
 
-### Assignment and Basic Methods
+### Size Information Methods
+  
+> __h.isEmpty()__  
+>> Return true if hash h contains no data key-value pairs (excludes methods)  
+  
+> __h.length()__  
+>> Returns number data key-value pairs (excludes methods)  
+>> TODO: add optional  
+  
+### Basic Assignment & Deletion Methods
     
 > __h1.mergeIn(h2)__ 
 >> Add the contents of h2 to h1.  
@@ -82,10 +91,18 @@ var hash = new Hash({
 >> Remove all key-value pairs from hash h.
 >> Without the `optional_boolean` the operation is recursive. Provide the argument `false` to prevent inner hashes from being deleted.  
   
-> __h.isEmpty()__  
->> Return true if hash h contains no data key/value pairs (excludes methods)  
+### Mapping Enumeration Methods
+
+The `this` keyword available inside the passed function in each method below. As is the case in Ruby Hashes, when the value of a 
+key-value pair is passed is to the function, assignment to it does not effect the hash data. You must assign to this[key] or hashname[key]. TODO: provide some way to traverse the hash ommitting certain data types to prevent deletion of inner hashes, etc.  
+
+> __h.each(function(key, value){...})__  
+>> Applies a function to each key-value pair passing both the key as string and the value as parameters.   
   
-> __h.length()__  
->> Returns number data key/value pairs (excludes methods)  
->> TODO: add optional  
+> __h.eachKey(function(key){...})__  
+>> Applies a function to each key-value pair passing the key as string parameter. 
 >> 
+> __h.eachValue(function(){...})__  
+>> Applies a function to each key-value pair passing the value as parameter.  
+
+
