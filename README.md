@@ -98,7 +98,15 @@ These methods are not in the Ruby Hash class and provide smarter ways to assign 
 >> Same as above.  
    
 > __h.const(key, value)__  
->> Same as `h.set(key, value, 'const')`   
+>> Same as `h.set(key, value, 'const')`  
+
+NOTE: that since any inner object is also a Hash object, they will also have Hash methods available to them. So, for example, 
+if you have a hash with two nested hashes you can do these:  
+
+```javascript
+var inner1 = hash.get(inner);
+var inner2 = hash.inner.get(innerinner);
+``` 
 
 ### Size Information Methods
   
@@ -122,7 +130,6 @@ These methods are not in the Ruby Hash class and provide smarter ways to assign 
 > __h.clear(optional_boolean)__  
 >> Remove all key-value pairs from hash h.
 >> Without the `optional_boolean` the operation is recursive. Provide the argument `false` to prevent inner hashes from being deleted.  
-
   
 ### Mapping Enumeration Methods
   
@@ -151,6 +158,26 @@ The `this` keyword available inside the passed function in each method below.
 > __h.keepIf(function(key, value){...})__  
 >> Delete every key-value pair from hash h for which passed function evaluates to false. 
 
+
+### JavaScript Concerns Methods  
+    
+> __h.toJson()__ 
+>> Returns hash object as a JSON string. Of course this also works as a method for nested hashes.  
+
+> __h.toJson(key)__ 
+>> Returns sub-hash as a JSON string.  TODO: test test test
+>> 
+> __h.logJson()__
+>> Same as above but it also logs to `console.log`. 
+   
+> __h.logJson(key)__
+>> Take a guess...   
+   
+> __h.defineProperty(prop, desc)__  
+>> Define a property with descriptor (runs `Object.defineProperty(this, prop, desc)`)  
+  
+> __h.logDescriptor()__  
+>> prints output of `Object.getOwnPropertyDescriptor(this, prop)`  
 
 
 

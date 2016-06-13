@@ -217,7 +217,44 @@ exports.Hash = function(arg1) {
       }
     },
 
-    );
+    // JavaScript Concerns Methods ============================================
+
+    toJson:
+    { value: function(prop)
+      { if (prop === undefined) return JSON.stringify(this);
+        else return JSON.stringify(this[prop]);
+      }
+    },
+    logJson:
+    { value: function(prop)
+      { var json;
+        if (prop === undefined) {
+          json = JSON.stringify(this);
+          console.log(json);
+        } else {
+          json = JSON.stringify(this[prop]);
+          console.log(json);
+        }
+        return json;
+      }
+    },
+    defineProperty: // define a property with descriptor
+    { value: function(prop, desc) {
+        Object.defineProperty(this, prop, desc);
+      }
+    },
+    logDescriptor:
+    { value: function(prop)
+      { if (prop === undefined) { console.log(this); }
+        else  {
+          console.log ('\n'+prop+': ')
+          console.log (Object.getOwnPropertyDescriptor(this, prop));
+        }
+      }
+    },
+  },
+
+  );
   // constructor with args:
   if (arg1 instanceof Object) { this.mergeHashes(arg1, this); }
 }
