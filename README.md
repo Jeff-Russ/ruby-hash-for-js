@@ -7,16 +7,17 @@ This is not any sort of release as of now. It's still in early stages of design.
 
 [on GitHub](http://github.com/Jeff-Russ/ruby-hash-for-js)  
 	
-This is a JavaScript implementation of the Ruby `Hash. class. Objects made from the `Hash. constructor provided here create `Hash. objects that contain most of the methods of the Ruby `Hash. objects while keeping the appearance and behavior as if they only contain data.  
+This is a JavaScript implementation of the Ruby `Hash` class. Objects made from the `Hash` constructor provided here create hash objects that contain most of the methods of the Ruby hashes.   
 
 ### Why?  
 
-JavaScript Object Literal notation is a great way to define objects as data containers but adding methods to them causes the methods themselves to be treated as data. JavaScript has rather unfriendly ways of preventing this that you most certainly would not one to do EVERY time you create a data object. This `Hash. class comes loaded with most of what you would need and stays out of the way. It also provides a friendly interface to add more methods.  
+Hashes can be declared in Ruby with a syntax very similar to how you would declare an object literal in JavaScript. The difference is that in Ruby, you are left with a data container that has many helpful methods available on it. Adding methods in object literal notation causes the methods themselves to be treated as enumerable data. Also, you wouldn't want to keep defining the same methods over and over every time you make a new object.  
+
+This `Hash` class allows you to construct object with the object literal notation with all of the convenient methods already added and configured to stay out of the way, giving the appearance of a pure data object.  
 
 ## Structure of a Hash object
 
-Conceptually, these `Hash. object have two sides, the enumerable data side and the non-enumerable write-protected method side. The data side will only allow:  
- 
+Conceptually, these `Hash` objects have two sides, the enumerable data side and the non-enumerable method side. The data side will only allow:  
 1. Strings
 2. Booleans
 3. Numbers
@@ -24,9 +25,11 @@ Conceptually, these `Hash. object have two sides, the enumerable data side and t
 5. Undefined
 6. Other `Hash` objects
 
-When you create object with nested objects, the `Hash. constructor method is called recursively. You can also add inner objects later, of course, and the objects will become `Hash. objects themselves. If the `Hash. class comes across a function definition, it will redefine it with a custom descriptor, preventing it from being enumerable.  
+When you create object that has nested objects, the `Hash` constructor method is called recursively so that these inner object also have the same helpful methods directly available to them. You can also add inner objects later, of course, and the objects will still become `Hash` objects themselves.  
 
-Objects added to a hash Object are essentially stripped of their prototypal  baggage. Functions will survive but will be protected from accidental reassignment and enumeration.  
+TODO: If the `Hash` class comes across a function definition, it will redefine it with a custom descriptor, preventing it from being enumerable.  
+
+Objects added to a hash Object are essentially stripped of their prototypal  baggage if any is found. TODO: Functions will survive but will be protected from accidental reassignment and enumeration.  
 
 ## Creating a new hash
 
@@ -84,7 +87,7 @@ These methods are not in the Ruby Hash class and provide smarter ways to assign 
 - `h.set(key, value)` assigns a new value to existing key or creates a new one. TODO: make all-uppercase keys create constants automatically.  
 - `h.set(key, value, 'const')` assigns a new readonly value to existing key or creates a new one.   
 - `h.set(innerhash_name, hash_obj)` creates a new key with innerhash_name and assigns it to the result of running `new Hash(hash_obj)`.  
-- `h.set(function_variable)` adds a new method to the Hash object as non-enumerable and write-protected.  
+- `h.set(function_variable)` adds a new method to the Hash object as non-enumerable and write-protected. TODO: test this  
 - `h.set(function(...){...})` Same as above.  
 - `h.const(key, value)` Same as `h.set(key, value, 'const')`  
 
@@ -129,6 +132,10 @@ key-value pair is passed is to the function, assignment to it does not effect th
 #### `eachValue`  
 - `h.eachValue(function(value){...})` applies a function to each key-value pair passing the value as parameter.  
 
+## Other Enumeration Methods
+
+TODO: say something here!  
+
 ## Deletion Methods
   
 #### `delete`  
@@ -137,10 +144,10 @@ key-value pair is passed is to the function, assignment to it does not effect th
 The `this` keyword available inside the passed function in each method below:  
   
 #### `deleteIf`  
-- `h.deleteIf(function(key, value){...})` deletes every key-value pair from hash h for which passed function evaluates to true.   
+- `h.deleteIf(function(key, value){...})` deletes every key-value pair from hash h for which a passed function evaluates to true.   
   
 #### `keepIf`  
-- `h.keepIf(function(key, value){...})` deletes every key-value pair from hash h for which passed function evaluates to false. 
+- `h.keepIf(function(key, value){...})` deletes every key-value pair from hash h for which a passed function evaluates to false. 
 
 
 ## JavaScript Concerns Methods  
@@ -162,5 +169,6 @@ The `this` keyword available inside the passed function in each method below:
 
 [](
 http://stackoverflow.com/questions/310870/use-of-prototype-vs-this-in-javascript
+http://thecodeship.com/web-development/methods-within-constructor-vs-prototype-in-javascript/
 )
 
