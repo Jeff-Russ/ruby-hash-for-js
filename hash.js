@@ -252,9 +252,8 @@ exports.Hash = function(arg1) {
         }
       }
     },
-  },
 
-  );
+  });
   // constructor with args:
   if (arg1 instanceof Object) { this.mergeHashes(arg1, this); }
 }
