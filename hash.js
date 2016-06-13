@@ -7,7 +7,7 @@ exports.Hash = function(arg1) {
     // see below Object.defineProperties for constructor with args
 
     // DEPENDENCIES ===========================================================
-    
+
     mergeHashes: // needs optional block to solve conflicts
     { value: function(src, dest) {
 
@@ -66,6 +66,16 @@ exports.Hash = function(arg1) {
             }
           }
         }
+      }
+    },
+    delete:
+    { value: function(prop)
+      { var type = typeof this[prop], val;
+        if (this.hasOwnProperty(prop) && type !== 'object' && type !== 'function') {
+          val = this[prop];
+          delete this[prop];
+        }
+        return val;
       }
     },
     // Size Information Methods ===============================================

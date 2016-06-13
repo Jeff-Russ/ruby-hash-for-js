@@ -91,6 +91,10 @@ var hash = new Hash({
 >> Remove all key-value pairs from hash h.
 >> Without the `optional_boolean` the operation is recursive. Provide the argument `false` to prevent inner hashes from being deleted.  
   
+> __h.delete(key)__  
+>> Delete key-value pair and return value from hash h whose key is equal to key
+
+  
 ### Mapping Enumeration Methods
   
 The `this` keyword available inside the passed function in each method below. As is the case in Ruby Hashes, when the value of a 
