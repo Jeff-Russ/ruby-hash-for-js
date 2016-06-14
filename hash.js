@@ -11,7 +11,9 @@ exports.Hash = function(arg1) {
   if (arg1 instanceof Object) {
     exports.Hash.prototype.mergeHashes(arg1, this);
   }
-}
+  Object.defineProperty(this,'default',{value: undefined, });
+};
+
 var HashProto = exports.Hash.prototype;
 
 // DEPENDENCIES ===========================================================
@@ -90,7 +92,7 @@ HashProto.const = function(prop, value) {
 HashProto.isEmpty = function() {
   var count = 0;
   for (var p in this) {
-    if (this.hasOwnProperty(p) && typeof this[p] !== 'function') { count++;}
+    if (this.hasOwnProperty(p) && typeof this[p] !== 'function') {count++;}
   }
   return count === 0;
 };
@@ -98,10 +100,22 @@ HashProto.isEmpty = function() {
 HashProto.length = function() {
   var count = 0;
   for (var p in this) {
-    if (this.hasOwnProperty(p) && typeof this[p] !== 'function') { count++;}
+    if (this.hasOwnProperty(p) && typeof this[p] !== 'function') {count++;}
   }
   return count;
 };
+
+// Key Information Methods ===============================================
+
+// NOT IN README
+HashProto.keys = function() {
+  return Object.keys(this);
+}
+
+// NOT IN README
+HashProto.hasKey = function(key) {
+  return this.hasOwnProperty(key)
+}
 
 // Mass Assignment & Deletion Methods ====================================
 
@@ -242,18 +256,6 @@ HashProto.toJson = function(prop) {
   else return JSON.stringify(this[prop]);
 };
 
-HashProto.logJson = function(prop) {
-  var json;
-  if (prop === undefined) {
-    json = JSON.stringify(this);
-    console.log(json);
-  } else {
-    json = JSON.stringify(this[prop]);
-    console.log(json);
-  }
-  return json;
-};
-
 HashProto.defineProperty = function(prop, desc) {
   // define a property with descriptor
   Object.defineProperty(this, prop, desc);
@@ -267,3 +269,13 @@ HashProto.logDescriptor = function(prop) {
   }
 };
 
+// console.log Methods ========================================================
+
+// NOT IN README
+for (var fn in HashProto) {
+  eval ('exports.Hash.prototype.'+fn+'_log'+' = function(){'+
+          'var ret = this.'+fn+'.apply(this,arguments);'+
+          'console.log(ret);'+
+          'return ret;'+
+        '};')
+}
