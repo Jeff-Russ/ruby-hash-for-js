@@ -155,10 +155,6 @@ The `this` keyword available inside the passed function in each method below:
 #### `toJson`  
 - `h.toJson()` returns hash object as a JSON string. Of course this also works as a method for nested hashes.  
 - `h.toJson(key)` returns sub-hash as a JSON string.  TODO: test test test
-
-#### `logJson`
-- `h.logJson()` Same as above but it also logs to `console.log`. 
-- `h.logJson(key)` Take a guess...   
    
 #### `defineProperty`  
 - `h.defineProperty(prop, desc)` define a property with descriptor (runs `Object.defineProperty(this, prop, desc)`)  
@@ -170,5 +166,7 @@ The `this` keyword available inside the passed function in each method below:
 [](
 http://stackoverflow.com/questions/310870/use-of-prototype-vs-this-in-javascript
 http://thecodeship.com/web-development/methods-within-constructor-vs-prototype-in-javascript/
+https://www.shortcutfoo.com/app/dojos/ruby-hashes/cheatsheet
+http://www.2ality.com/2011/12/fake-operator-overloading.html
 )
 
